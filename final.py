@@ -13,7 +13,7 @@ pd.set_option('expand_frame_repr', False)
 start_set = pd.read_csv('final_train.csv')
 final_set = pd.read_csv('final_test.csv')
 
-# PRE-PROCESSING TRAINING
+# PRE-PROCESSING IMPUTATION
 categorical_data = start_set[['cut', 'color', 'clarity']]
 float_data = start_set.drop(['cut', 'color', 'clarity'], axis=1)
 
@@ -122,14 +122,7 @@ for category, ranks in categories.items():
     ax.set_xlabel('carat')
     ax.set_ylabel('predicted price')
 
-"""
-Looking at the each category and each regression, which one comes the closest to the actual price?
-It is possible that a category is more important than another which would skew the prediction so that
-a regression based on the important category is most often the best indicator of price.
-From this exploration and pie chart, we can see that each category is pretty much evenly split to be good indicators of
-the price, none of the categories are more often closer to the price.
-Therefore the model should evenly weigh these three categories when calculating the final prediction.
-"""
+
 diffs = pd.DataFrame()
 diffs['cut_diffs'] = abs(result_explore['price'] - result_explore['cut_based_price'])
 diffs['color_diffs'] = abs(result_explore['price'] - result_explore['color_based_price'])
